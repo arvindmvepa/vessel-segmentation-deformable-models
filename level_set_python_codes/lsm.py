@@ -84,8 +84,8 @@ class LSM:
         if sigma == -1:
             sigma = self.sigma
             
-        return self.conv_heat(A, sigma) # to use a heat equation
-#         return self.conv_gaussian(A, sigma) # to use a Gaussian kernel
+        #return self.conv_heat(A, sigma) # to use a heat equation
+        return self.conv_gaussian(A, sigma) # to use a Gaussian kernel
         
     """
         compute (partial_x phi) and (partial_y phi)
