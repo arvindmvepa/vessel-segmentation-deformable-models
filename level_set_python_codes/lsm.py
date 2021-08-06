@@ -47,7 +47,7 @@ class LSM:
         return idct(idct(a.T, norm='ortho').T, norm='ortho')
     
     # initialize phi with a quadratic function
-    def initialize_phi(self, image: NDArray[Float64])
+    def initialize_phi(self, image: NDArray[Float64]):
         x = np.linspace(0.5/self.n1,1-0.5/self.n1,self.n1)
         y = np.linspace(0.5/self.n2,1-0.5/self.n2,self.n2)
         x, y = np.meshgrid(x,y)
