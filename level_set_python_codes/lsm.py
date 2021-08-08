@@ -154,7 +154,7 @@ class LSM:
     """
     def compute_the_region_average_intensity(self, image: NDArray[Float64]):
         # computing c1
-        self.tmp[:,:] = self.H_epsilon(self.phi)
+        self.tmp = self.H_epsilon(self.phi)
         denom = np.sum(self.tmp)
         numer = np.sum(image * self.tmp)
         
