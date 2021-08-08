@@ -112,7 +112,8 @@ class LSM:
         tmp = image - 0.5 * (self.f1 + self.f2)
         tmp = self.conv(tmp)
         
-        tmp2 = np.abs(tmp)
+        tmp2 = self.conv(0.5 * (self.f1 + self.f2))
+        tmp2 = np.abs(tmp2)
         tmp2[tmp2<1] = 1
         
         return tmp / tmp2
