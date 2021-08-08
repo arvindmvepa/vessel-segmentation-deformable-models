@@ -10,18 +10,16 @@ import matplotlib.pyplot as plt
 from scipy.fftpack import dct, idct # for Fourier transforms
 from nptyping import NDArray, Float64
 from scipy.ndimage.filters import gaussian_filter # For a Gaussian blur
-import cv2
 
 # Level set method class
-class LSM:
-    def __init__(self, n1, n2, rho, sigma, omega, epsilon, alpha=2):
+class LSM2:
+    def __init__(self, n1, n2, rho, sigma, omega, epsilon):
         self.n1 = n1
         self.n2 = n2
         self.rho = rho
         self.sigma = sigma
         self.omega = omega
         self.epsilon = epsilon
-        self.alpha = alpha
         self.phi = np.zeros((self.n2, self.n1))
         self.phi_x = np.zeros_like(self.phi)
         self.phi_y = np.zeros_like(self.phi)
@@ -93,13 +91,11 @@ class LSM:
         computed values: self.phi_x, self.phi_y
     """
     def compute_absolute_gradient(self):
-        #phi_x1 = np.power(self.phi[:,:-1] - self.phi[:,1:],2)
-        #phi_y1 = np.power(self.phi[:-1,:] - self.phi[1:,:],2)
-        phi_x1 = cv2.Sobel(self.phi, dx=1, dy=0)
-        phi_y1 = cv2.Sobel(self.phi, dx=0, dy=1)
+        phi_x1 = np.power(self.phi[:,:-1] - self.phi[:,1:],2)
+        phi_y1 = np.power(self.phi[:-1,:] - self.phi[1:,:],2)
         
-        self.phi_x = np.power(phi_x1, 2)
-        self.phi_y = np.power(phi_y1, 2)
+        self.phi_x[:,:-1] = phi_x1
+        self.phi_y[:-1,:] = phi_y1
         
         self.phi_1norm = np.sqrt(self.phi_x + self.phi_y)
     
@@ -116,9 +112,10 @@ class LSM:
         tmp = image - 0.5 * (self.f1 + self.f2)
         tmp = self.conv(tmp)
 
-        tmp2 = np.abs(tmp)
+        tmp2 = self.conv(0.5 * (self.f1 + self.f2))
+        tmp2 = np.abs(tmp2)
         tmp2 = np.max(tmp2)
-
+        
         return tmp / tmp2
     
     """
@@ -183,4 +180,4 @@ class LSM:
         update phi with a given step size
     """
     def update_phi(self, step_size: Float64, image):
-        self.phi += step_size * (self.Spf * self.alpha * self.phi_1norm)
+        self.phi -= step_size * (self.Spf * self.phi_1norm)

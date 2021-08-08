@@ -12,7 +12,7 @@ from nptyping import NDArray, Float64
 from scipy.ndimage.filters import gaussian_filter # For a Gaussian blur
 
 # Level set method class
-class LSM_:
+class LSM1:
     def __init__(self, n1, n2, rho, sigma, omega, epsilon):
         self.n1 = n1
         self.n2 = n2
