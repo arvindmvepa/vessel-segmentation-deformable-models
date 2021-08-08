@@ -111,9 +111,8 @@ class LSM_:
     def compute_gL(self, image: NDArray[Float64]):
         tmp = image - 0.5 * (self.f1 + self.f2)
         tmp = self.conv(tmp)
-        
-        tmp2 = self.conv(0.5 * (self.f1 + self.f2))
-        tmp2 = np.abs(tmp2)
+
+        tmp2 = np.abs(tmp)
         tmp2 = np.max(tmp2)
         
         return tmp / tmp2
