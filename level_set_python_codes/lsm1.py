@@ -13,13 +13,14 @@ from scipy.ndimage.filters import gaussian_filter # For a Gaussian blur
 
 # Level set method class
 class LSM1:
-    def __init__(self, n1, n2, rho, sigma, omega, epsilon):
+    def __init__(self, n1, n2, rho, sigma, omega, epsilon, alpha=1):
         self.n1 = n1
         self.n2 = n2
         self.rho = rho
         self.sigma = sigma
         self.omega = omega
         self.epsilon = epsilon
+        self.alpha = alpha
         self.phi = np.zeros((self.n2, self.n1))
         self.phi_x = np.zeros_like(self.phi)
         self.phi_y = np.zeros_like(self.phi)
@@ -179,4 +180,4 @@ class LSM1:
         update phi with a given step size
     """
     def update_phi(self, step_size: Float64, image):
-        self.phi -= step_size * (self.Spf * self.phi_1norm)
+        self.phi += step_size * (self.Spf * self.alpha * self.phi_1norm)
