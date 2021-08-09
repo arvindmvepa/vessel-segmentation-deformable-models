@@ -92,8 +92,8 @@ class LSM3:
         computed values: self.phi_x, self.phi_y
     """
     def compute_absolute_gradient(self):
-        phi_x1 = cv2.Sobel(self.phi, ddepth=cv2.CV_32F, dx=1, dy=0)
-        phi_y1 = cv2.Sobel(self.phi, ddepth=cv2.CV_32F, dx=0, dy=1)
+        phi_x1 = cv2.Sobel(self.phi, ddepth=-1, dx=1, dy=0)
+        phi_y1 = cv2.Sobel(self.phi, ddepth=-1, dx=0, dy=1)
 
         self.phi_x = np.power(phi_x1, 2)
         self.phi_y = np.power(phi_y1, 2)
