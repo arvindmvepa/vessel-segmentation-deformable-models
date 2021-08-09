@@ -180,4 +180,4 @@ class LSM1:
         update phi with a given step size
     """
     def update_phi(self, step_size: Float64, image):
-        self.phi += step_size * (self.Spf * self.alpha * self.phi_1norm)
+        self.phi -= step_size * (self.Spf * self.alpha * self.phi_1norm)
