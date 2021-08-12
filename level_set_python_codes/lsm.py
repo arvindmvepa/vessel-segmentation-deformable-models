@@ -48,11 +48,11 @@ class LSM:
         return idct(idct(a.T, norm='ortho').T, norm='ortho')
 
     # initialize phi with a quadratic function
-    def initialize_phi(self, image: NDArray[Float64]):
+    def initialize_phi(self, image: NDArray[Float64], x_offset=0.5, y_offset=0.8, radius=0.1):
         x = np.linspace(0.5/self.n1,1-0.5/self.n1,self.n1)
         y = np.linspace(0.5/self.n2,1-0.5/self.n2,self.n2)
         x, y = np.meshgrid(x,y)
-        self.phi = - (x-0.5)**2 - (y-0.8)**2 + 0.1**2
+        self.phi = - (x - x_offset) ** 2 - (y - y_offset) ** 2 + radius ** 2
 
         #A = self.conv_heat(image, 0.001)
         #self.phi = -(A - np.min(A) - (np.max(A) - np.min(A)) * 0.05)
